@@ -1,4 +1,4 @@
-import {jwtVerify} from "../utiLs/verify-jwt.js";
+import {jwtVerify} from "../utils/verify-jwt.js";
 import { JWTSECRET } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
 
