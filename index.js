@@ -1,14 +1,19 @@
+
 import { app } from "./app.js";
-import {connectMongoDB} from "./config/db.js";
-import dotenv from "dotenv";
-import {PORT} from "./constants.js"
+import { connectMongoDB } from "./config/db.js";
+import { PORT } from "./constants.js";
 
-dotenv.config({
-    path:"./.env"
-})
 
-await connectMongoDB()
+connectMongoDB()
+  .then(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT || 5000, () => {
+        console.log(`🚀 Server up on http://localhost:${PORT}`);
+      });
+    }
+  })
+  .catch((err) => {
+    console.error("MongoDB cFonnection failed !!! ", err);
+  });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server up on http://localhost:${PORT}`);
-});
+export default app; 
