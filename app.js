@@ -15,7 +15,7 @@ import { errorHandler } from "./middlewares/errorhandler.middleware.js";
 import { ApiError } from "./utils/ApiError.js";
 
 dotenv.config({
-    path: "./.env"
+  path: "./.env",
 });
 
 const app = express();
@@ -24,20 +24,17 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-app.use(cors({
-    origin: process.env.FRONTENED_URL,
-    credentials: true
-}));
+app.use(cors());
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Expense Tracker API is running smoothly!",
-        status: "Success"
-    });
+  res.status(200).json({
+    message: "Expense Tracker API is running smoothly!",
+    status: "Success",
+  });
 });
 
 app.use("/api/v1/auth", authRoute);
@@ -47,7 +44,7 @@ app.use("/api/v1/expense", expenseRoute);
 app.use("/api/v1/dashboard", dashboardRoute);
 
 app.use((req, res, next) => {
-    next(new ApiError(404, "Route not found"));
+  next(new ApiError(404, "Route not found"));
 });
 
 app.use(errorHandler);
